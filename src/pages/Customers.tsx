@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { 
   Users, 
@@ -168,7 +169,7 @@ export default function Customers() {
     },
     {
       key: 'contact',
-      title: 'Contact Info',
+      title: t('table.contact.info'),
       render: (_, row: Customer) => (
         <div className="space-y-1">
           <div className={`flex items-center gap-2 text-sm ${isRTL ? 'flex-row-reverse' : ''}`}>
@@ -194,17 +195,17 @@ export default function Customers() {
     },
     {
       key: 'orders',
-      title: 'Orders & Spent',
+      title: t('table.orders.spent'),
       render: (_, row: Customer) => (
         <div className={isRTL ? 'text-right' : ''}>
-          <div className="font-medium text-gray-900">{row.totalOrders} orders</div>
+          <div className="font-medium text-gray-900">{row.totalOrders} {t('orders')}</div>
           <div className="text-sm text-green-600">${row.totalSpent.toLocaleString()}</div>
         </div>
       ),
     },
     {
       key: 'lastActivity',
-      title: 'Last Activity',
+      title: t('table.last.activity'),
       render: (value: string) => (
         <div className={`flex items-center gap-2 text-sm text-gray-600 ${isRTL ? 'flex-row-reverse' : ''}`}>
           <Calendar className="w-4 h-4" />
@@ -214,7 +215,7 @@ export default function Customers() {
     },
     {
       key: 'assignedTo',
-      title: 'Account Manager',
+      title: t('table.account.manager'),
       render: (value: string) => (
         <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
           <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
@@ -236,9 +237,9 @@ export default function Customers() {
               <MoreHorizontal className="w-4 h-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className={isRTL ? 'text-right' : ''}>
+          <DropdownMenuContent className={`${isRTL ? 'text-right' : ''} bg-white shadow-lg border z-50`}>
             <DropdownMenuItem>
-              <Eye className="w-4 h-4 mr-2" />
+              <Eye className={`w-4 h-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
               {t('button.view.details')}
             </DropdownMenuItem>
             <DropdownMenuItem>{t('button.edit')}</DropdownMenuItem>
@@ -297,7 +298,7 @@ export default function Customers() {
           value={activeCustomers.toString()}
           icon={UserCheck}
           color="green"
-          change={`${Math.round((activeCustomers / totalCustomers) * 100)}% active rate`}
+          change={`${Math.round((activeCustomers / totalCustomers) * 100)}% ${t('active.rate')}`}
         />
         <KPICard
           title={t('kpi.inactive.customers')}
@@ -306,7 +307,7 @@ export default function Customers() {
           color="red"
         />
         <KPICard
-          title="Total Revenue"
+          title={t('kpi.total.revenue')}
           value={`$${Math.round(totalRevenue / 1000)}K`}
           icon={TrendingUp}
           color="purple"
@@ -327,12 +328,12 @@ export default function Customers() {
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className={`px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${isRTL ? 'text-right' : ''}`}
         >
-          <option value="All">All Status</option>
-          <option value="Active">Active</option>
-          <option value="Inactive">Inactive</option>
-          <option value="Pending">Pending</option>
+          <option value="All">{t('filter.all.status')}</option>
+          <option value="Active">{t('status.active')}</option>
+          <option value="Inactive">{t('status.inactive')}</option>
+          <option value="Pending">{t('status.pending')}</option>
         </select>
       </div>
 
