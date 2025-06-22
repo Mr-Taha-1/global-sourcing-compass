@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   DollarSign, 
@@ -20,6 +19,7 @@ import { KPICard } from '@/components/ui/cards/KPICard';
 import { DataTable } from '@/components/ui/tables/DataTable';
 import { StatusBadge } from '@/components/ui/badges/StatusBadge';
 import { useLanguage } from '@/hooks/useLanguage';
+import { AddExpenseModal } from '@/components/modals/AddExpenseModal';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -46,6 +46,7 @@ export default function Expenses() {
   const { t, isRTL } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const expensesData: Expense[] = [
     {
@@ -276,7 +277,7 @@ export default function Expenses() {
             <Filter className="w-4 h-4" />
             {t('button.filter')}
           </Button>
-          <Button size="sm">
+          <Button size="sm" onClick={() => setIsAddModalOpen(true)}>
             <Plus className="w-4 h-4" />
             {t('button.record.expenses')}
           </Button>
@@ -337,6 +338,12 @@ export default function Expenses() {
 
       {/* Expenses Table */}
       <DataTable columns={columns} data={filteredExpenses} />
+
+      {/* Add Expense Modal */}
+      <AddExpenseModal 
+        isOpen={isAddModalOpen} 
+        onClose={() => setIsAddModalOpen(false)} 
+      />
     </div>
   );
 }

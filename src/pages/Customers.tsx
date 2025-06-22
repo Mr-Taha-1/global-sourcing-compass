@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   Users, 
@@ -23,6 +22,7 @@ import { KPICard } from '@/components/ui/cards/KPICard';
 import { DataTable } from '@/components/ui/tables/DataTable';
 import { StatusBadge } from '@/components/ui/badges/StatusBadge';
 import { useLanguage } from '@/hooks/useLanguage';
+import { AddCustomerModal } from '@/components/modals/AddCustomerModal';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -50,6 +50,7 @@ export default function Customers() {
   const { t, isRTL } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const customersData: Customer[] = [
     {
@@ -276,7 +277,7 @@ export default function Customers() {
             <Filter className="w-4 h-4" />
             {t('button.filter')}
           </Button>
-          <Button size="sm">
+          <Button size="sm" onClick={() => setIsAddModalOpen(true)}>
             <Plus className="w-4 h-4" />
             {t('button.new.customer')}
           </Button>
@@ -337,6 +338,12 @@ export default function Customers() {
 
       {/* Customers Table */}
       <DataTable columns={columns} data={filteredCustomers} />
+
+      {/* Add Customer Modal */}
+      <AddCustomerModal 
+        isOpen={isAddModalOpen} 
+        onClose={() => setIsAddModalOpen(false)} 
+      />
     </div>
   );
 }
